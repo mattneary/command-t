@@ -31,16 +31,17 @@ var result = (tab, i) => {
 
 var results = document.querySelector('#results')
 const render = xs => {
-  _xs = xs
-  results.innerHTML = ''
-  xs.filter(x => {
+  var filtered = xs.filter(x => {
     if (query) {
       var escapeRgx = s => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
       var regex = new RegExp(query.split('').map(escapeRgx).join('.*'), 'i')
       return x.title.match(regex) || x.url.match(regex)
     }
     return true
-  }).map(result).forEach(x => results.appendChild(x))
+  })
+  _xs = filtered
+  results.innerHTML = ''
+  filtered.map(result).forEach(x => results.appendChild(x))
 }
 bg.onTab(render)
 
