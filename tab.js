@@ -37,7 +37,7 @@ const render = xs => {
     if (query) {
       var escapeRgx = s => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
       var regex = new RegExp(query.split('').map(escapeRgx).join('.*'), 'i')
-      return x.title.match(regex)
+      return x.title.match(regex) || x.url.match(regex)
     }
     return true
   }).map(result).forEach(x => results.appendChild(x))
