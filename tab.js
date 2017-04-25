@@ -9,6 +9,10 @@ var li = (...children) => {
   children.forEach(c => elm.appendChild(c))
   return elm
 }
+var selectTab = tab => {
+  bg.setActive(tab.id)
+  window.close()
+}
 var a = (tab, i) => {
   var elm = document.createElement('div')
   elm.className = 'result'
@@ -17,8 +21,7 @@ var a = (tab, i) => {
   span.innerText = tab.title
   elm.appendChild(span)
   elm.addEventListener('click', () => {
-    console.log('click', tab.id)
-    bg.setActive(tab.id)
+    selectTab(tab)
   })
   return elm
 }
@@ -32,7 +35,9 @@ const render = xs => {
   results.innerHTML = ''
   xs.filter(x => {
     if (query) {
-      return x.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      var escapeRgx = s => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+      var regex = new RegExp(query.split('').map(escapeRgx).join('.*'), 'i')
+      return x.title.match(regex)
     }
     return true
   }).map(result).forEach(x => results.appendChild(x))
@@ -46,7 +51,7 @@ function checkKey(evt) {
     evt.preventDefault()
   } else if (evt.keyCode == '13') {
     // enter
-    bg.setActive(_xs[selectedId].id)
+    selectTab(_xs[selectedId])
     evt.preventDefault()
   } else if (evt.keyCode == '40') {
     // down arrow
