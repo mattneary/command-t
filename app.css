@@ -1,0 +1,31 @@
+#container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 50px 70px;
+}
+
+#search {
+  font-size: 30;
+  padding: 10;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid #ccc;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+#results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.result {
+  padding: 20px;
+  font-size: 20px;
+}
+
+.result.active {
+  background: #eee;
+  color: black;
+}
