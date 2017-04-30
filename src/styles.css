@@ -85,10 +85,6 @@
 }
 
 .info {
-  flex: 1 1;
-  max-width: 100px;
-}
-
-.info span {
   padding: 5px;
+  color: #757575;
 }

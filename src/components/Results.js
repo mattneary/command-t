@@ -17,7 +17,12 @@ const KEYS = {
 class Results extends Component {
   componentWillMount() {
     var bg = chrome.extension.getBackgroundPage()
-    bg.subscribe(this.props.setTabs)
+    bg.getWindow(id => {
+      if (!this.props.windowId) this.props.setWindowId(id)
+    })
+    bg.subscribe((windowId, tabs) => {
+      if (windowId === this.props.windowId) this.props.setTabs(tabs)
+    })
 
     document.addEventListener('keydown', this.onKey, false)
     document.addEventListener('click', () => {
@@ -27,12 +32,13 @@ class Results extends Component {
 
   onKey = evt => {
     const cmd = evt.metaKey || evt.ctrlKey
+    const {tabs, index} = this.props
     if (evt.keyCode in KEYS) {
       const key = KEYS[evt.keyCode]
       let met = true
       if (key === 'UP') this.props.setIndex(x => x - 1)
       else if (key === 'DOWN') this.props.setIndex(x => x + 1)
-      else if (key === 'ENTER') this.selectTab(this.props.tabs[this.props.index])
+      else if (key === 'ENTER') this.selectTab(tabs[index], cmd)
       else if (cmd && key === 'BACKSPACE') this.closeTab(this.props.tabs[this.props.index])
       else met = false
       if (met) evt.preventDefault()
@@ -45,10 +51,10 @@ class Results extends Component {
     this.props.setTabs(pull(tab))
   }
 
-  selectTab = tab => {
+  selectTab = (tab, openInBackground) => {
     var bg = chrome.extension.getBackgroundPage()
     bg.setActive(tab.id)
-    window.close()
+    if (!openInBackground) window.close()
   }
 
   copyLinks = () => {
@@ -71,7 +77,8 @@ class Results extends Component {
         <div className='row'>
           <h1>command-t</h1>
           <div className='info'>&#8984; + &#x232B; to delete</div>
-          <div className='info'>&#x23CE; to open</div>
+          <div className='info'>&#x23CE; to open and exit</div>
+          <div className='info'>&#8984; + &#x23CE; to open</div>
           <div className='link' onClick={() => this.copyLinks()}>
             {!isEmpty(this.props.tabs) &&
               <span>{`Copy Links (${this.props.tabs.length})`}</span>
@@ -103,9 +110,9 @@ class Results extends Component {
 }
 
 export default compose(
-  withState('tabs', 'setTabs', []),
   withState('query', 'setQuery', ''),
   withState('index', 'setIndex', 0),
+  withState('windowId', 'setWindowId', null),
   withProps(props => {
     const {query} = props
     const tabs = props.tabs.filter(tab => {
