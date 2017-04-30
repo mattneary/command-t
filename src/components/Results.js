@@ -11,6 +11,7 @@ const KEYS = {
   40: 'DOWN',
   37: 'LEFT',
   37: 'RIGHT',
+  8: 'BACKSPACE',
 }
 
 class Results extends Component {
@@ -25,13 +26,22 @@ class Results extends Component {
   }
 
   onKey = evt => {
+    const cmd = evt.metaKey || evt.ctrlKey
     if (evt.keyCode in KEYS) {
       const key = KEYS[evt.keyCode]
+      let met = true
       if (key === 'UP') this.props.setIndex(x => x - 1)
-      if (key === 'DOWN') this.props.setIndex(x => x + 1)
-      if (key === 'ENTER') this.selectTab(this.props.tabs[this.props.index])
-      evt.preventDefault()
+      else if (key === 'DOWN') this.props.setIndex(x => x + 1)
+      else if (key === 'ENTER') this.selectTab(this.props.tabs[this.props.index])
+      else if (cmd && key === 'BACKSPACE') this.closeTab(this.props.tabs[this.props.index])
+      else met = false
+      if (met) evt.preventDefault()
     }
+  }
+
+  closeTab = tab => {
+    var bg = chrome.extension.getBackgroundPage()
+    bg.closeTab(tab.id)
   }
 
   selectTab = tab => {
