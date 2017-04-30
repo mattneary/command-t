@@ -81,7 +81,13 @@ class Results extends Component {
     return (
       <div id='container'>
         <div className='row logo'>
-          <img src='icon.png' className='icon' />
+          <img
+            src='icon.png'
+            className='icon'
+            onClick={() =>
+              this.openLinks(['https://www.instagram.com/command.t/'])
+            }
+          />
         </div>
         <div className='row header'>
           <h1
