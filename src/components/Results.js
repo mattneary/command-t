@@ -60,6 +60,11 @@ class Results extends Component {
     textField.remove()
   }
 
+  openLinks = links => {
+    var bg = chrome.extension.getBackgroundPage()
+    links.forEach(link => bg.openLink(link))
+  }
+
   render() {
     return (
       <div id='container'>
@@ -75,7 +80,14 @@ class Results extends Component {
           id='search'
           placeholder='search'
           type='text'
-          onChange={evt => this.props.setQuery(evt.target.value)}
+          onChange={evt => {
+            const query = evt.target.value
+            if (query.match(/^[^:]+:\/\//)) {
+              this.openLinks(query.split(/\s+/))
+            } else {
+              this.props.setQuery(evt.target.value)
+            }
+          }}
           ref={x => {this._search = x}}
         />
         <ul id='results'>

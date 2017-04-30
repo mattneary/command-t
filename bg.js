@@ -12,6 +12,10 @@ function closeTab(tabId) {
   chrome.tabs.remove(tabId)
 }
 
+function openLink(link) {
+  chrome.tabs.create({url: link, active: false})
+}
+
 function subscribe(fn) {
   const refresh = () => onTab(fn)
   chrome.tabs.onCreated.addListener(refresh)
