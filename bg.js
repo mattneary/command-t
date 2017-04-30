@@ -17,8 +17,12 @@ function openLink(link) {
 }
 
 function subscribe(fn) {
-  const refresh = () => onTab(fn)
-  chrome.tabs.onCreated.addListener(refresh)
-  chrome.tabs.onUpdated.addListener(refresh)
-  chrome.tabs.onActivated.addListener(refresh)
+  const refresh = (value, path) => (...args) => {
+    if (args[path[0]][path[1]] === value) onTab(fn)
+  }
+  chrome.windows.getCurrent(currentWindow => {
+    chrome.tabs.onCreated.addListener(refresh(currentWindow.id, [0, 'windowId']))
+    chrome.tabs.onUpdated.addListener(refresh(currentWindow.id, [2, 'windowId']))
+    chrome.tabs.onActivated.addListener(refresh(currentWindow.id, [0, 'windowId']))
+  })
 }

@@ -78,7 +78,7 @@ class Results extends Component {
         </div>
         <input
           id='search'
-          placeholder='search'
+          placeholder='search or paste links'
           type='text'
           onChange={evt => {
             const query = evt.target.value
