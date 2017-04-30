@@ -25,6 +25,15 @@ class Results extends Component {
     })
 
     document.addEventListener('keydown', this.onKey, false)
+    this.updateTitle(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.title !== this.props.title) this.updateTitle(nextProps)
+  }
+
+  updateTitle = props => {
+    document.title = props.title
   }
 
   onKey = evt => {
@@ -75,7 +84,11 @@ class Results extends Component {
           <img src='icon.png' className='icon' />
         </div>
         <div className='row header'>
-          <h1 tabIndex={-1} contentEditable>command-t</h1>
+          <h1
+            tabIndex={-1}
+            contentEditable
+            onBlur={evt => this.props.setTitle(evt.target.innerText)}
+          >command-t</h1>
           <div className='info'>&#8984; + &#x232B; to delete</div>
           <div className='info'>&#x23CE; to open and exit</div>
           <div className='info'>&#8984; + &#x23CE; to open</div>
@@ -121,6 +134,7 @@ export default compose(
   withState('query', 'setQuery', ''),
   withState('index', 'setIndex', 0),
   withState('windowId', 'setWindowId', null),
+  withState('title', 'setTitle', 'command-t'),
   withProps(props => {
     const {query} = props
     const tabs = props.tabs.filter(tab => {
