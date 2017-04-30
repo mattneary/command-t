@@ -21,11 +21,40 @@
 }
 
 .result {
-  padding: 20px;
-  font-size: 20px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+}
+
+.path-parts {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  flex: 1 1;
 }
 
 .result.active {
   background: #eee;
   color: black;
+}
+
+.result .title, .result .domain, .result .path {
+  display: block;
+  padding: 10px 10px;
+  white-space: nowrap;
+}
+
+.result .path {
+  padding: 10px 4px;
+}
+
+.result .path:after {
+  content: '/';
+}
+
+.result .title, .result .domain {
+  min-width: 200px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,7 +1,9 @@
 import {compose} from 'lodash/fp'
-import {withState} from 'recompose'
+import {withState, withProps} from 'recompose'
 import {Component} from 'react'
 import cx from 'classnames'
+
+import Result from './Result'
 
 const KEYS = {
   38: 'UP',
@@ -27,27 +29,18 @@ class Results extends Component {
       const key = KEYS[evt.keyCode]
       if (key === 'UP') this.props.setIndex(x => x - 1)
       if (key === 'DOWN') this.props.setIndex(x => x + 1)
-      if (key === 'ENTER') this.selectTabIndex(this.props.index)
+      if (key === 'ENTER') this.selectTab(this.props.tabs[this.props.index])
       evt.preventDefault()
     }
   }
 
-  selectTabIndex = index => {
+  selectTab = tab => {
     var bg = chrome.extension.getBackgroundPage()
-    bg.setActive(index)
+    bg.setActive(tab.id)
     window.close()
   }
 
   render() {
-    const {query} = this.props
-    const tabs = this.props.tabs.filter(tab => {
-      if (query) {
-        var escapeRgx = s => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
-        var regex = new RegExp(query.split('').map(escapeRgx).join('.*'), 'i')
-        return tab.title.match(regex) || tab.url.match(regex)
-      }
-      return true
-    })
     return (
       <div id='container'>
         <h1>command-t</h1>
@@ -56,13 +49,11 @@ class Results extends Component {
           placeholder='search'
           type='text'
           onChange={evt => this.props.setQuery(evt.target.value)}
-          ref={x => { this._search = x }}
+          ref={x => {this._search = x}}
         />
         <ul id='results'>
-          {tabs.map((tab, i) =>
-            <li key={i} className={cx('result', i === this.props.index && 'active')}>
-              <span>{tab.title}</span>
-            </li>
+          {this.props.tabs.map((tab, i) =>
+            <Result tab={tab} active={i === this.props.index} />
           )}
         </ul>
       </div>
@@ -74,4 +65,18 @@ export default compose(
   withState('tabs', 'setTabs', []),
   withState('query', 'setQuery', ''),
   withState('index', 'setIndex', 0),
+  withProps(props => {
+    const {query} = props
+    const tabs = props.tabs.filter(tab => {
+      if (query) {
+        var escapeRgx = s => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+        var regex = new RegExp(query.split('').map(escapeRgx).join('.*'), 'i')
+        const titleMatch = tab.title.match(regex)
+        const urlMatch = tab.url.match(regex)
+        return titleMatch || urlMatch
+      }
+      return true
+    })
+    return {tabs}
+  }),
 )(Results)
