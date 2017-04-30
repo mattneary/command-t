@@ -101,7 +101,14 @@ class Results extends Component {
         />
         <ul id='results'>
           {this.props.tabs.map((tab, i) =>
-            <Result tab={tab} active={i === this.props.index} />
+            <Result
+              tab={tab}
+              active={i === this.props.index}
+              onClick={evt => {
+                const cmd = evt.metaKey || evt.ctrlKey
+                this.selectTab(this.props.tabs[i], cmd)
+              }}
+            />
           )}
         </ul>
       </div>

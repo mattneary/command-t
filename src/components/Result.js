@@ -7,7 +7,10 @@ class Result extends Component {
     const prefix = url.indexOf('//') === -1 ? 0 : url.indexOf('//') + 2
     const [domain, ...path] = url.substr(prefix).split('/').filter(x => x)
     return (
-      <li className={cx('result', this.props.active && 'active')}>
+      <li
+        className={cx('result', this.props.active && 'active')}
+        onClick={this.props.onClick}
+      >
         <span className='title'>{title}</span>
         <span className='domain'>{domain}</span>
         <div className='path-parts'>

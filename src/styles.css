@@ -20,6 +20,17 @@
   padding: 0;
 }
 
+#results:hover .result.active {
+  background: white;
+  color: black;
+}
+
+#results .result:hover {
+  background: #eee;
+  color: black;
+  cursor: pointer;
+}
+
 .result {
   font-size: 14px;
   display: flex;
