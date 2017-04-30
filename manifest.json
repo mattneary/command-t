@@ -1,12 +1,15 @@
 {
   "name": "command-t",
   "description": "Search open tabs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "incognito": "split",
   "chrome_url_overrides": {"newtab": "start.html"},
   "permissions": ["tabs", "background"],
   "manifest_version": 2,
   "background": {
     "scripts": ["bg.js"]
+  },
+  "icons": {
+      "128": "icon_128.png"
   }
 }
