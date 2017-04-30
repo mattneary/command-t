@@ -72,6 +72,9 @@ class Results extends Component {
     return (
       <div id='container'>
         <div className='row'>
+          <img src='icon.png' />
+        </div>
+        <div className='row'>
           <h1 tabIndex={-1} contentEditable>command-t</h1>
           <div className='info'>&#8984; + &#x232B; to delete</div>
           <div className='info'>&#x23CE; to open and exit</div>
