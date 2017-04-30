@@ -25,9 +25,6 @@ class Results extends Component {
     })
 
     document.addEventListener('keydown', this.onKey, false)
-    document.addEventListener('click', () => {
-      this._search && this._search.focus()
-    }, false)
   }
 
   onKey = evt => {
@@ -75,7 +72,7 @@ class Results extends Component {
     return (
       <div id='container'>
         <div className='row'>
-          <h1>command-t</h1>
+          <h1 contentEditable>command-t</h1>
           <div className='info'>&#8984; + &#x232B; to delete</div>
           <div className='info'>&#x23CE; to open and exit</div>
           <div className='info'>&#8984; + &#x23CE; to open</div>

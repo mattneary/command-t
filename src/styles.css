@@ -25,7 +25,8 @@
   color: black;
 }
 
-#results .result:hover {
+#results .result:hover,
+#results .result.active:hover {
   background: #eee;
   color: black;
   cursor: pointer;
