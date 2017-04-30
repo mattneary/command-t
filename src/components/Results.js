@@ -72,7 +72,7 @@ class Results extends Component {
     return (
       <div id='container'>
         <div className='row'>
-          <h1 contentEditable>command-t</h1>
+          <h1 tabIndex={-1} contentEditable>command-t</h1>
           <div className='info'>&#8984; + &#x232B; to delete</div>
           <div className='info'>&#x23CE; to open and exit</div>
           <div className='info'>&#8984; + &#x23CE; to open</div>
@@ -83,6 +83,7 @@ class Results extends Component {
           </div>
         </div>
         <input
+          tabIndex={0}
           id='search'
           placeholder='search or paste links'
           type='text'
