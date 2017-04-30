@@ -58,3 +58,28 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.row h1 {
+  flex: 1 1;
+}
+
+.link {
+  flex: 1 1;
+  max-width: 100px;
+  cursor: pointer;
+}
+
+.link span {
+  padding: 5px;
+}
+
+.link:hover span {
+  background: black;
+  color: white;
+}

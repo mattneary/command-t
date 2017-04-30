@@ -1,4 +1,4 @@
-import {compose} from 'lodash/fp'
+import {compose, isEmpty} from 'lodash/fp'
 import {withState, withProps} from 'recompose'
 import {Component} from 'react'
 import cx from 'classnames'
@@ -50,10 +50,26 @@ class Results extends Component {
     window.close()
   }
 
+  copyLinks = () => {
+    var textField = document.createElement('textarea')
+    textField.value = this.props.tabs.map(tab => tab.url).join('\n')
+    document.body.appendChild(textField)
+    textField.select()
+    document.execCommand('copy')
+    textField.remove()
+  }
+
   render() {
     return (
       <div id='container'>
-        <h1>command-t</h1>
+        <div className='row'>
+          <h1>command-t</h1>
+          <div className='link' onClick={() => this.copyLinks()}>
+            {!isEmpty(this.props.tabs) &&
+              <span>{`Copy Links (${this.props.tabs.length})`}</span>
+            }
+          </div>
+        </div>
         <input
           id='search'
           placeholder='search'
