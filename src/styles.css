@@ -83,3 +83,12 @@
   background: black;
   color: white;
 }
+
+.info {
+  flex: 1 1;
+  max-width: 100px;
+}
+
+.info span {
+  padding: 5px;
+}

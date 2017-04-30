@@ -70,6 +70,8 @@ class Results extends Component {
       <div id='container'>
         <div className='row'>
           <h1>command-t</h1>
+          <div className='info'>&#8984; + &#x232B; to delete</div>
+          <div className='info'>&#x23CE; to open</div>
           <div className='link' onClick={() => this.copyLinks()}>
             {!isEmpty(this.props.tabs) &&
               <span>{`Copy Links (${this.props.tabs.length})`}</span>
