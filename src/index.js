@@ -6,7 +6,7 @@ import cs from './styles.css'
 
 class App extends Component {
   render () {
-    return <Results tabs={this.props.tabs} />
+    return <Results />
   }
 }
 

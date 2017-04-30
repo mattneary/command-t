@@ -1,4 +1,4 @@
-import {compose, isEmpty} from 'lodash/fp'
+import {compose, isEmpty, pull} from 'lodash/fp'
 import {withState, withProps} from 'recompose'
 import {Component} from 'react'
 import cx from 'classnames'
@@ -17,7 +17,7 @@ const KEYS = {
 class Results extends Component {
   componentWillMount() {
     var bg = chrome.extension.getBackgroundPage()
-    bg.onTab(this.props.setTabs)
+    bg.subscribe(this.props.setTabs)
 
     document.addEventListener('keydown', this.onKey, false)
     document.addEventListener('click', () => {
@@ -42,6 +42,7 @@ class Results extends Component {
   closeTab = tab => {
     var bg = chrome.extension.getBackgroundPage()
     bg.closeTab(tab.id)
+    this.props.setTabs(pull(tab))
   }
 
   selectTab = tab => {
