@@ -43,14 +43,12 @@ body {
   padding: 0;
 }
 
-#results .result.active {
-  background: rgba(56, 142, 93, 0.8);
+.result.active, .result.active:hover {
+  background: rgba(29, 170, 252, 0.8);
 }
 
-#results .result:hover,
-#results .result.active:hover {
-  background: rgba(56, 142, 93, 0.8);
-  cursor: pointer;
+.result:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .result {
@@ -58,6 +56,7 @@ body {
   font-size: 14px;
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
 
 .path-parts {
