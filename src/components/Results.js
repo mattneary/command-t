@@ -4,7 +4,6 @@ import {Component} from 'react'
 import cx from 'classnames'
 
 import Result from './Result'
-import Wallpaper from './Wallpaper'
 import iconStr from './iconStr'
 
 const KEYS = {
