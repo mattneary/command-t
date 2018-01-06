@@ -17,9 +17,7 @@ function openLink(link) {
 }
 
 function getWindow(cb) {
-  chrome.windows.getCurrent(currentWindow => {
-    cb(currentWindow.id)
-  })
+  chrome.windows.getCurrent(cb)
 }
 
 function subscribe(fn) {

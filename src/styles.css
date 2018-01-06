@@ -1,17 +1,40 @@
+body {
+  background: rgb(253, 246, 228);
+}
+
 #container {
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
   box-sizing: border-box;
   padding: 30px 70px;
+  color: black;
+}
+
+#background {
+  background: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 #search {
+  background: none;
   font-size: 30;
   padding: 10;
   border-radius: 5px;
   outline: none;
-  border: 2px solid #ccc;
+  border: none;
+  border-bottom: 2px solid black;
   width: 100%;
   margin-bottom: 30px;
+}
+
+#search::placeholder {
+  color: black;
 }
 
 #results {
@@ -20,19 +43,18 @@
   padding: 0;
 }
 
-#results:hover .result.active {
-  background: white;
-  color: black;
+#results .result.active {
+  background: rgba(56, 142, 93, 0.8);
 }
 
 #results .result:hover,
 #results .result.active:hover {
-  background: #eee;
-  color: black;
+  background: rgba(56, 142, 93, 0.8);
   cursor: pointer;
 }
 
 .result {
+  color: black;
   font-size: 14px;
   display: flex;
   flex-direction: row;
@@ -45,9 +67,8 @@
   flex: 1 1;
 }
 
-.result.active {
-  background: #eee;
-  color: black;
+::-webkit-scrollbar {
+  display: none;
 }
 
 .result .title, .result .domain, .result .path {
@@ -79,6 +100,8 @@
 
 .row h1 {
   flex: 1 1;
+  color: black;
+  font-family: Courier, monospace;
 }
 
 .link {
@@ -98,7 +121,7 @@
 
 .info {
   padding: 5px;
-  color: #757575;
+  color: black;
 }
 
 .icon {

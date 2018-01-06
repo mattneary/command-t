@@ -11,7 +11,7 @@ class Result extends Component {
         className={cx('result', this.props.active && 'active')}
         onClick={this.props.onClick}
       >
-        <span className='title'>{title}</span>
+        <span className='title' title={title}>{title}</span>
         <span className='domain'>{domain}</span>
         <div className='path-parts'>
           {path.map((p, i) =>

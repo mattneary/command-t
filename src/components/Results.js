@@ -1,9 +1,11 @@
-import {compose, isEmpty, pull} from 'lodash/fp'
+import {compose, isEmpty, pull, get} from 'lodash/fp'
 import {withState, withProps} from 'recompose'
 import {Component} from 'react'
 import cx from 'classnames'
 
 import Result from './Result'
+import Wallpaper from './Wallpaper'
+import iconStr from './iconStr'
 
 const KEYS = {
   38: 'UP',
@@ -17,11 +19,11 @@ const KEYS = {
 class Results extends Component {
   componentWillMount() {
     var bg = chrome.extension.getBackgroundPage()
-    bg.getWindow(id => {
-      if (!this.props.windowId) this.props.setWindowId(id)
+    bg.getWindow(w => {
+      if (!this.props.window) this.props.setWindow(w)
     })
     bg.subscribe((windowId, tabs) => {
-      if (windowId === this.props.windowId) this.props.setTabs(tabs)
+      if (windowId === get('id', this.props.window)) this.props.setTabs(tabs)
     })
 
     document.addEventListener('keydown', this.onKey, false)
@@ -82,7 +84,7 @@ class Results extends Component {
       <div id='container'>
         <div className='row logo'>
           <img
-            src='icon.png'
+            src={iconStr}
             className='icon'
             onClick={() =>
               this.openLinks(['https://www.instagram.com/command.t/'])
@@ -139,7 +141,7 @@ class Results extends Component {
 export default compose(
   withState('query', 'setQuery', ''),
   withState('index', 'setIndex', 0),
-  withState('windowId', 'setWindowId', null),
+  withState('window', 'setWindow', null),
   withState('title', 'setTitle', 'command-t'),
   withProps(props => {
     const {query} = props
